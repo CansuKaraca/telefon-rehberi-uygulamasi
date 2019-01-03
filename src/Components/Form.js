@@ -5,7 +5,12 @@ class Form extends Component {
     constructor (){
         super();
         this.onChange=this.onChange.bind(this);
+        this.onSubmit=this.onSubmit.bind(this);
     }
+    static propTypes = {
+        addContact:PropTypes.func
+    };
+
     state = {
         name : '',
         phone : ''
@@ -15,11 +20,17 @@ class Form extends Component {
             [e.target.name] : e.target.value
         });
     }
+    onSubmit(e){
+        e.preventDefault();
+        this.props.addContact({
+        ...this.state
+        });
+    }
 
     render() {
         return (
             < div>
-                <form>
+                <form onSubmit={this.onSubmit}>
                     <input name="name" id="name" value={this.state.name} onChange={this.onChange} placeholder= "Enter a name"/>
                     <br/>
                     <input name="phone" id="phone" value={this.state.phone} onChange={this.onChange} placeholder= "Enter a phone"/>
